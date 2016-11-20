@@ -71,7 +71,7 @@ public:
     };
     inline explicit JsonObject(const string &jsonString);
     inline bool isValidated();
-    inline bool exist(const string &key)throw (ReadJsonException);
+    inline bool exist(const string &key);
     inline JsonObject::JsonValue operator[](const string &key);
     inline JsonObject::JsonValue operator[](const size_t index);
     inline void clear();

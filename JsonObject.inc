@@ -34,7 +34,7 @@ bool JsonObject::isValidated() {
 	return this->_status == SUCCESS;
 }
 
-inline bool JsonObject::exist(const string &key) throw (ReadJsonException) {
+inline bool JsonObject::exist(const string &key) {
 	try {
 		return this->_value.exist(key);
 	} catch (ptree_error & e) {
