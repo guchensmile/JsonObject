@@ -109,6 +109,35 @@ void testArrayGet() {
 	}
 }
 
+void testIndex(){
+	JsonObject js("{\"root\":"
+				"{"
+				"\"l2_1\":"
+				"{"
+				"\"l3_1\":[0,1],"
+				"\"l3_2\":[\"s1\",\"s2\"]"
+				"},"
+				"\"l2_2\":"
+				"["
+				"{"
+				"\"l3_1\":\"item1\","
+				"\"l3_2\":\"item2\""
+				"},"
+				"{"
+				"\"l3_1\":\"item1\","
+				"\"l3_2\":\"item2\""
+				"}"
+				"]"
+				"}"
+				"}");
+	if (!js.isValidated()) {
+		throw ReadJsonException("invalid json format!");
+	}
+	cout << js["root"]["l2_1"]["l3_1"][0].as<int>() << endl;
+	cout << js["root"]["l2_1"]["l3_1"][1].as<int>() << endl;
+	cout << js["root"]["l2_2"][1]["l3_2"].as<string>() << endl;
+}
+
 void testArraySet() {
 	JsonObject js("{"
 			"\"root\":"
@@ -369,22 +398,41 @@ void testException() {
 	try {
 		JsonObject js("{"
 				"\"int\": 0,"
-				"\"string\": "
+				"\"string\": "//try "\"string\": \"\""
 				"}");
 		cout << string(js) << endl;
 		cout << js["int"].as<int>() << endl;
+	} catch (ReadJsonException &e) {
+		cout << e.what() << endl;
+	}
+	try {
+		//wrong js format, last element should no ,
+		JsonObject js("{"
+				"\"int\": 0,"
+				"\"string\": \"haha\","//try "\"string\": \"haha\""
+				"}");
+		cout << string(js) << endl;
 		cout << js["string"].as<string>() << endl;
 	} catch (ReadJsonException &e) {
 		cout << e.what() << endl;
 	}
 	try {
 		JsonObject js("{"
-				"\"int\": 0,"
-				"\"string\": \"haha\","
+				"\"array_int\": [0,1],"
+				"\"array_string\": [\"first\",\"second\"]"
 				"}");
 		cout << string(js) << endl;
-		cout << js["int"].as<int>() << endl;
-		cout << js["string"].as<string>() << endl;
+		cout << js["array_int"][2].as<int>() << endl;
+	} catch (ReadJsonException &e) {
+		cout << e.what() << endl;
+	}
+	try {
+		JsonObject js("{"
+				"\"array_int\": [0,1],"
+				"\"array_string\": [\"first\",\"second\"]"
+				"}");
+		cout << string(js) << endl;
+		cout << js["array_string"][2].as<string>() << endl;
 	} catch (ReadJsonException &e) {
 		cout << e.what() << endl;
 	}
@@ -400,6 +448,8 @@ int main() {
 	testOperatorNesting();
 	cout << "testArrayGet:" << i++ << endl;
 	testArrayGet();
+	cout << "testIndex" << i++ << endl;
+	testIndex();
 	cout << "testArraySet:" << i++ << endl;
 	testArraySet();
 	cout << "testArraySet2:" << i++ << endl;

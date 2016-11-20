@@ -44,7 +44,7 @@ public:
     class JsonValue{
     public:
         inline JsonValue operator[](const string &key);
-//      inline JsonValue operator[](const size_t index);
+        inline JsonValue operator[](const size_t index);
         inline void clear();
         template<typename T>
         void append(T value);
@@ -73,7 +73,7 @@ public:
     inline bool isValidated();
     inline bool exist(const string &key)throw (ReadJsonException);
     inline JsonObject::JsonValue operator[](const string &key);
-//    inline JsonObject::JsonValue operator[](const size_t index);
+    inline JsonObject::JsonValue operator[](const size_t index);
     inline void clear();
     template<typename T>
     void append(T value);

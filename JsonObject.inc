@@ -50,13 +50,13 @@ JsonObject::JsonValue JsonObject::operator[](const string &key) {
 	}
 }
 
-//JsonObject::JsonValue JsonObject::operator[](const size_t index){
-//	try {
-//		return this->_value[index];
-//	} catch (ptree_error & e) {
-//		throw ReadJsonException("[index:" + std::to_string(index) + "]," + e.what());
-//	}
-//}
+JsonObject::JsonValue JsonObject::operator[](const size_t index){
+	try {
+		return this->_value[index];
+	} catch (ptree_error & e) {
+		throw ReadJsonException("[index:" + std::to_string(index) + "]," + e.what());
+	}
+}
 
 void JsonObject::clear() {
 	try {
@@ -127,21 +127,15 @@ JsonObject::JsonValue JsonObject::JsonValue::operator[](const string &key) {
 	return JsonValue(this->_pt.get_child(key));
 }
 
-//JsonObject::JsonValue JsonObject::JsonValue::operator[](const size_t index){
-//    std::pair< ptree::const_assoc_iterator,
-//               ptree::const_assoc_iterator > bounds = _pt.equal_range( "" );
-//
-//
-//    if ( index > std::distance( bounds.first, bounds.second ) )
-//    {
-//    	throw ptree_error("out of range:"+index);
-//    }
-//    else
-//    {
-//        std::advance( bounds.first, index );
-//        return JsonValue(bounds.first->second.dereference());
-//    }
-//}
+JsonObject::JsonValue JsonObject::JsonValue::operator[](const size_t index){
+    size_t count=0;
+    for(auto pos = this->_pt.begin(); pos != this->_pt.end(); ++pos){
+    	if(count++==index){
+    		return JsonValue(pos->second);
+    	}
+    }
+    throw ReadJsonException("[index:" + std::to_string(index) + "]" + "out of range");
+}
 
 void JsonObject::JsonValue::clear() {
 	this->_pt.clear();
