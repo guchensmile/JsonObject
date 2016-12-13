@@ -79,6 +79,15 @@ void JsonObject::append(const JsonValue &value){
 	this->_value.append(value);
 }
 
+void JsonObject::remove(const string& key){
+    this->_value.remove(key);
+}
+
+template<typename T>
+void JsonObject::add(const string &key, const T& value){
+    this->_value.add(key,value);
+}
+
 template<typename T>
 T JsonObject::as() {
 	try {
@@ -154,6 +163,15 @@ void JsonObject::JsonValue::append(const JsonObject::JsonValue &value) {
 
 void JsonObject::JsonValue::append(const JsonObject &value){
 	this->_pt.get_child("").push_back(std::make_pair("", value._pt));
+}
+
+void JsonObject::JsonValue::remove(const string& key){
+    this->_pt.erase(key);
+}
+
+template<typename T>
+void JsonObject::JsonValue::add(const string &key, const T& value){
+    this->_pt.add(key,value);
 }
 
 template<typename T>

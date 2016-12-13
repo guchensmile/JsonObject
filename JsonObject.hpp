@@ -50,6 +50,9 @@ public:
         void append(T value);
         inline void append(const JsonValue &value);
         inline void append(const JsonObject &value);
+        inline void remove(const string& key);
+		template<typename T>
+		void add(const string &key, const T& value);
         template<typename T>
         T as();
         template<typename T>
@@ -79,6 +82,9 @@ public:
     void append(T value);
     inline void append(const JsonObject &value);
     inline void append(const JsonValue &value);
+    inline void remove(const string& key);
+	template<typename T>
+	void add(const string &key, const T& value);
     template<typename T>
     T as();
     template<typename T>

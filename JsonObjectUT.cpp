@@ -394,6 +394,34 @@ void testFloat() {
 	cout << js["root.l2_content.l3_float"].as<float>() << endl;
 }
 
+void testRemove(){
+    JsonObject js("{"
+			"\"root\":"
+			"{"
+			"\"l2\":1,"
+			"\"l2_another\":2"
+			"}"
+			"}");
+
+    cout<<string(js)<<endl;
+    js["root"].remove("l2_another");
+    cout<<string(js)<<endl;
+}
+
+void testAdd(){
+    JsonObject js("{"
+			"\"root\":"
+			"{"
+			"\"l2\":1"
+			"}"
+			"}");
+    cout<<string(js)<<endl;
+    js["root"]["l2"].add("has_brother",false);
+    cout<<string(js)<<endl;
+    js.add("root_brother","root2");
+    cout<<string(js)<<endl;
+}
+
 void testException() {
 	try {
 		JsonObject js("{"
@@ -470,6 +498,10 @@ int main() {
 	testBool();
 	cout << "testFloat:" << i++ << endl;
 	testFloat();
+	cout << "testRemove:" << i++ << endl;
+	testRemove();
+	cout << "testAdd:" << i++ << endl;
+	testAdd();
 	cout << "testException:" << i++ << endl;
 	testException();
 }
